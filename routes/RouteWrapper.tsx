@@ -6,7 +6,10 @@ const Stack = createNativeStackNavigator();
 
 const RouteWrapper = () => {
   return (
-    <Stack.Navigator initialRouteName="Home">
+    <Stack.Navigator
+      initialRouteName="Home"
+      screenOptions={{ headerShown: false }}
+    >
       {routeMap.map((Current, index) => {
         return (
           <Stack.Screen

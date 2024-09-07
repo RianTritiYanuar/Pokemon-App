@@ -1,5 +1,4 @@
 import { Component } from "react";
-import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 
 // Props
 interface Props {
@@ -8,7 +7,7 @@ interface Props {
 
 // State
 interface S {
-  sampleStateNumber: number;
+  pokemon: string[];
 }
 
 export default class HomeController extends Component<Props, S> {
@@ -16,12 +15,28 @@ export default class HomeController extends Component<Props, S> {
     super(props);
 
     this.state = {
-      sampleStateNumber: 0,
+      pokemon: [],
     };
   }
 
   componentDidMount = async () => {
     console.log("Component Mount");
+    this.fetchPokemon();
+  };
+
+  fetchPokemon = async () => {
+    const url = "https://pokeapi.co/api/v2/pokemon?offset=0&limit=20";
+    try {
+      const response = await fetch(url);
+      const json = await response.json();
+      if (json.results.length > 0) {
+        this.setState({
+          pokemon: json.results,
+        });
+      }
+    } catch (error: any) {
+      console.error(error.message);
+    }
   };
 
   navigateToDetail = () => {
